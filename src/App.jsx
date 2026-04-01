@@ -11,12 +11,26 @@ export default function App() {
   const { brands, categories, categoryTree, loading, error } = useGoogleSheet();
   const [activeParent, setActiveParent] = useState('全部');
   const [activeChild, setActiveChild] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredBrands = activeParent === '全部'
+  // Filter by category
+  let filteredBrands = activeParent === '全部'
     ? brands
     : activeChild
       ? brands.filter(b => b.parentCategory === activeParent && b.subCategory === activeChild)
       : brands.filter(b => b.parentCategory === activeParent);
+
+  // Filter by search
+  if (searchQuery.trim()) {
+    const q = searchQuery.trim().toLowerCase();
+    filteredBrands = filteredBrands.filter(b =>
+      b.name.toLowerCase().includes(q) ||
+      b.description.toLowerCase().includes(q) ||
+      b.category.toLowerCase().includes(q) ||
+      b.parentCategory.toLowerCase().includes(q) ||
+      (b.subCategory && b.subCategory.toLowerCase().includes(q))
+    );
+  }
 
   const handleParentChange = (parent) => {
     setActiveParent(parent);
@@ -50,6 +64,8 @@ export default function App() {
         activeCategory={activeCategory}
         onParentChange={handleParentChange}
         onChildChange={handleChildChange}
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
         loading={loading}
         error={error}
       />

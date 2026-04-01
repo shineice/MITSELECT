@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import BrandReview from './BrandReview';
 
-export default function BrandShowcase({ brands, categoryTree, activeParent, activeChild, activeCategory, onParentChange, onChildChange, loading, error }) {
+export default function BrandShowcase({ brands, categoryTree, activeParent, activeChild, activeCategory, onParentChange, onChildChange, searchQuery, onSearchChange, loading, error }) {
   const [expandedBrand, setExpandedBrand] = useState(null);
 
   if (loading) {
@@ -47,12 +47,36 @@ export default function BrandShowcase({ brands, categoryTree, activeParent, acti
           <div className="w-12 h-px bg-earth mx-auto mt-4 md:mt-6" />
         </div>
 
+        {/* Search Bar */}
+        <div className="relative mb-5 md:mb-6 max-w-md mx-auto">
+          <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-warm-gray/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => onSearchChange(e.target.value)}
+            placeholder="搜尋品牌名稱、類別..."
+            className="w-full pl-9 pr-8 py-2.5 text-sm bg-white border border-earth/15 rounded-full text-graphite placeholder:text-warm-gray/40 focus:outline-none focus:border-earth/40 transition-colors"
+          />
+          {searchQuery && (
+            <button
+              onClick={() => onSearchChange('')}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-warm-gray/40 hover:text-warm-gray"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          )}
+        </div>
+
         {/* Category Filter - 母類別 (sticky on mobile) */}
-        <div className="sticky top-0 z-20 bg-parchment py-2 md:py-0 md:static -mx-3 px-3 md:mx-0 md:px-0">
-          <div className="flex md:flex-wrap md:justify-center gap-2 mb-2 md:mb-4 overflow-x-auto scrollbar-hide pb-1 md:pb-0">
+        <div className="sticky top-0 z-20 bg-parchment py-3 md:py-0 md:static -mx-3 px-3 md:mx-0 md:px-0">
+          <div className="flex md:flex-wrap md:justify-center gap-3 md:gap-3 mb-3 md:mb-4 overflow-x-auto scrollbar-hide pb-1 md:pb-0">
             <button
               onClick={() => onParentChange('全部')}
-              className={`px-4 py-1.5 text-xs tracking-wide border transition-all duration-300 whitespace-nowrap shrink-0 ${
+              className={`px-5 py-2 text-xs tracking-widest border transition-all duration-300 whitespace-nowrap shrink-0 ${
                 activeParent === '全部'
                   ? 'border-earth bg-earth text-parchment'
                   : 'border-earth/20 text-warm-gray hover:border-earth/50'
@@ -64,7 +88,7 @@ export default function BrandShowcase({ brands, categoryTree, activeParent, acti
               <button
                 key={parent}
                 onClick={() => onParentChange(parent)}
-                className={`px-4 py-1.5 text-xs tracking-wide border transition-all duration-300 whitespace-nowrap shrink-0 ${
+                className={`px-5 py-2 text-xs tracking-widest border transition-all duration-300 whitespace-nowrap shrink-0 ${
                   activeParent === parent
                     ? 'border-earth bg-earth text-parchment'
                     : 'border-earth/20 text-warm-gray hover:border-earth/50'
@@ -77,10 +101,10 @@ export default function BrandShowcase({ brands, categoryTree, activeParent, acti
 
           {/* Category Filter - 子類別 (horizontal scroll on mobile) */}
           {activeParent !== '全部' && categoryTree[activeParent]?.length > 0 && (
-            <div className="flex md:flex-wrap md:justify-center gap-2 mb-2 md:mb-4 overflow-x-auto scrollbar-hide pb-1 md:pb-0">
+            <div className="flex md:flex-wrap md:justify-center gap-2.5 md:gap-3 mb-3 md:mb-4 overflow-x-auto scrollbar-hide pb-1 md:pb-0">
               <button
                 onClick={() => onParentChange(activeParent)}
-                className={`px-3 py-1 text-[11px] tracking-wide border rounded-full transition-all duration-300 whitespace-nowrap shrink-0 ${
+                className={`px-4 py-1.5 text-[11px] tracking-widest border rounded-full transition-all duration-300 whitespace-nowrap shrink-0 ${
                   !activeChild
                     ? 'border-earth/60 bg-earth/10 text-earth'
                     : 'border-earth/15 text-warm-gray hover:border-earth/40'
@@ -92,7 +116,7 @@ export default function BrandShowcase({ brands, categoryTree, activeParent, acti
                 <button
                   key={child}
                   onClick={() => onChildChange(activeParent, child)}
-                  className={`px-3 py-1 text-[11px] tracking-wide border rounded-full transition-all duration-300 whitespace-nowrap shrink-0 ${
+                  className={`px-4 py-1.5 text-[11px] tracking-widest border rounded-full transition-all duration-300 whitespace-nowrap shrink-0 ${
                     activeChild === child
                       ? 'border-earth/60 bg-earth/10 text-earth'
                       : 'border-earth/15 text-warm-gray hover:border-earth/40'
