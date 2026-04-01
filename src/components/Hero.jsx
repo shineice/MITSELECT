@@ -20,7 +20,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[70vh] md:min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-graphite">
         <div
@@ -53,7 +53,9 @@ export default function Hero() {
             探索品牌
           </a>
           <a
-            href="#contact"
+            href="https://docs.google.com/forms/d/e/1FAIpQLScAPatF0tPwUVlyIbkzeJOZmt_JhQkgHB8YtLraIdbjeDM5OQ/viewform?usp=publish-editor"
+            target="_blank"
+            rel="noopener noreferrer"
             className="px-8 py-3 border border-parchment/40 text-parchment/80 text-sm tracking-widest hover:border-parchment hover:text-parchment transition-all duration-500"
           >
             品牌上架
