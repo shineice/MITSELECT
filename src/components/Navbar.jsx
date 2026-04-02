@@ -167,11 +167,77 @@ export default function Navbar({ categoryTree, activeParent, activeChild, onPare
       <div className={`md:hidden overflow-hidden transition-all duration-500 bg-parchment/95 backdrop-blur-md ${
         menuOpen ? 'max-h-[80vh] overflow-y-auto' : 'max-h-0'
       }`}>
-        <div className="px-6 py-4 flex flex-col gap-1">
-          <a href="#brands" onClick={() => setMenuOpen(false)} className="text-sm tracking-wide text-graphite py-2">探索品牌</a>
-          <a href="#reviews" onClick={() => setMenuOpen(false)} className="text-sm tracking-wide text-graphite py-2">使用者回饋</a>
-          <div className="h-px bg-earth/10 my-2" />
-          <a href={FORM_URL} target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)} className="text-sm tracking-wide px-5 py-2 border border-graphite text-graphite text-center">聯絡上架</a>
+        <div className="px-6 py-4 flex flex-col">
+          {/* 分類區 */}
+          <p className="text-[10px] text-earth tracking-[0.2em] uppercase mb-3">分類</p>
+
+          <button
+            onClick={() => handleSelectParent('全部')}
+            className={`text-left py-2.5 text-sm transition-colors ${
+              activeParent === '全部' ? 'text-earth font-medium' : 'text-graphite'
+            }`}
+          >
+            全部品牌
+          </button>
+
+          {parentCategories.map(parent => (
+            <div key={parent}>
+              <button
+                onClick={() => {
+                  if (mobileExpandedParent === parent) {
+                    setMobileExpandedParent(null);
+                  } else {
+                    setMobileExpandedParent(parent);
+                  }
+                }}
+                className={`w-full text-left py-2.5 text-sm flex items-center justify-between transition-colors ${
+                  activeParent === parent ? 'text-earth font-medium' : 'text-graphite'
+                }`}
+              >
+                <span>{parent}</span>
+                {categoryTree[parent]?.length > 0 && (
+                  <svg className={`w-4 h-4 text-warm-gray transition-transform duration-300 ${mobileExpandedParent === parent ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                )}
+              </button>
+
+              {/* 子類別展開 */}
+              <div className={`overflow-hidden transition-all duration-300 ${
+                mobileExpandedParent === parent ? 'max-h-[500px]' : 'max-h-0'
+              }`}>
+                <div className="pl-4 pb-1 border-l-2 border-earth/20 ml-2">
+                  {categoryTree[parent]?.map(child => (
+                    <button
+                      key={child}
+                      onClick={() => handleSelectChild(parent, child)}
+                      className={`w-full text-left py-2.5 text-sm transition-colors ${
+                        activeParent === parent && activeChild === child
+                          ? 'text-earth font-medium'
+                          : 'text-warm-gray hover:text-graphite'
+                      }`}
+                    >
+                      {child}
+                    </button>
+                  ))}
+                  <button
+                    onClick={() => handleSelectParent(parent)}
+                    className="w-full text-left py-2.5 text-xs text-earth font-medium"
+                  >
+                    所有 {parent} →
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+
+          {/* 分隔線 */}
+          <div className="h-px bg-earth/10 my-3" />
+
+          <a href="#brands" onClick={() => setMenuOpen(false)} className="text-sm tracking-wide text-graphite py-2.5">探索品牌</a>
+          <a href="#reviews" onClick={() => setMenuOpen(false)} className="text-sm tracking-wide text-graphite py-2.5">使用者回饋</a>
+          <div className="h-px bg-earth/10 my-3" />
+          <a href={FORM_URL} target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)} className="text-sm tracking-wide px-5 py-2.5 border border-graphite text-graphite text-center">聯絡上架</a>
         </div>
       </div>
 
