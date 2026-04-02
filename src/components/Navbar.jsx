@@ -173,7 +173,7 @@ export default function Navbar({ categoryTree, activeParent, activeChild, onPare
 
           <button
             onClick={() => handleSelectParent('全部')}
-            className={`text-left py-2.5 text-sm transition-colors ${
+            className={`text-left py-3 text-sm transition-colors ${
               activeParent === '全部' ? 'text-earth font-medium' : 'text-graphite'
             }`}
           >
@@ -190,7 +190,7 @@ export default function Navbar({ categoryTree, activeParent, activeChild, onPare
                     setMobileExpandedParent(parent);
                   }
                 }}
-                className={`w-full text-left py-2.5 text-sm flex items-center justify-between transition-colors ${
+                className={`w-full text-left py-3 text-sm flex items-center justify-between transition-colors ${
                   activeParent === parent ? 'text-earth font-medium' : 'text-graphite'
                 }`}
               >
@@ -211,7 +211,7 @@ export default function Navbar({ categoryTree, activeParent, activeChild, onPare
                     <button
                       key={child}
                       onClick={() => handleSelectChild(parent, child)}
-                      className={`w-full text-left py-2.5 text-sm transition-colors ${
+                      className={`w-full text-left py-3 text-sm transition-colors ${
                         activeParent === parent && activeChild === child
                           ? 'text-earth font-medium'
                           : 'text-warm-gray hover:text-graphite'
@@ -222,7 +222,7 @@ export default function Navbar({ categoryTree, activeParent, activeChild, onPare
                   ))}
                   <button
                     onClick={() => handleSelectParent(parent)}
-                    className="w-full text-left py-2.5 text-xs text-earth font-medium"
+                    className="w-full text-left py-3 text-xs text-earth font-medium"
                   >
                     所有 {parent} →
                   </button>
@@ -234,8 +234,8 @@ export default function Navbar({ categoryTree, activeParent, activeChild, onPare
           {/* 分隔線 */}
           <div className="h-px bg-earth/10 my-3" />
 
-          <a href="#brands" onClick={() => setMenuOpen(false)} className="text-sm tracking-wide text-graphite py-2.5">探索品牌</a>
-          <a href="#reviews" onClick={() => setMenuOpen(false)} className="text-sm tracking-wide text-graphite py-2.5">使用者回饋</a>
+          <a href="#brands" onClick={() => setMenuOpen(false)} className="text-sm tracking-wide text-graphite py-3">探索品牌</a>
+          <a href="#reviews" onClick={() => setMenuOpen(false)} className="text-sm tracking-wide text-graphite py-3">使用者回饋</a>
           <div className="h-px bg-earth/10 my-3" />
           <a href={FORM_URL} target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)} className="text-sm tracking-wide px-5 py-2.5 border border-graphite text-graphite text-center">聯絡上架</a>
         </div>
