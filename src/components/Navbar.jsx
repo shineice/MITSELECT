@@ -151,9 +151,29 @@ export default function Navbar({ categoryTree, activeParent, activeChild, onPare
           </a>
         </div>
 
-        {/* Mobile: nothing here — bottom nav handles mobile navigation */}
+        {/* Mobile Hamburger */}
+        <button
+          className="md:hidden flex flex-col gap-1.5 p-2"
+          onClick={() => { setMenuOpen(!menuOpen); setCatOpen(false); }}
+          aria-label="Toggle menu"
+        >
+          <span className={`w-6 h-px transition-all duration-300 ${scrolled ? 'bg-graphite' : 'bg-parchment'} ${menuOpen ? 'rotate-45 translate-y-[3.5px]' : ''}`} />
+          <span className={`w-6 h-px transition-all duration-300 ${scrolled ? 'bg-graphite' : 'bg-parchment'} ${menuOpen ? 'opacity-0' : ''}`} />
+          <span className={`w-6 h-px transition-all duration-300 ${scrolled ? 'bg-graphite' : 'bg-parchment'} ${menuOpen ? '-rotate-45 -translate-y-[3.5px]' : ''}`} />
+        </button>
       </div>
 
+      {/* Mobile Menu */}
+      <div className={`md:hidden overflow-hidden transition-all duration-500 bg-parchment/95 backdrop-blur-md ${
+        menuOpen ? 'max-h-[80vh] overflow-y-auto' : 'max-h-0'
+      }`}>
+        <div className="px-6 py-4 flex flex-col gap-1">
+          <a href="#brands" onClick={() => setMenuOpen(false)} className="text-sm tracking-wide text-graphite py-2">探索品牌</a>
+          <a href="#reviews" onClick={() => setMenuOpen(false)} className="text-sm tracking-wide text-graphite py-2">使用者回饋</a>
+          <div className="h-px bg-earth/10 my-2" />
+          <a href={FORM_URL} target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)} className="text-sm tracking-wide px-5 py-2 border border-graphite text-graphite text-center">聯絡上架</a>
+        </div>
+      </div>
 
       {/* Click outside to close dropdown */}
       {catOpen && <div className="fixed inset-0 z-[-1]" onClick={() => setCatOpen(false)} />}
